@@ -1,0 +1,163 @@
+<!doctype html>
+<html>
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<link rel="icon" href="images/favicon2.ico">
+
+<title>Video Poker</title>
+
+<style>
+@import "css/main.css";
+@import "css/custom.css";
+
+#wager {margin-top:2em;}
+#yourmoney { disabled:disabled; width:5em; }
+#bet { width:5em; }
+</style>
+
+<script src="js/jquery.js"></script>
+<script src="js/jquery-ui.js"></script>
+</head>
+
+<body>
+
+<div id="content">
+    
+      <img src="images/videopoker.png">
+    
+    <div id="app">
+
+		<img id="1" src="images/0.gif" />
+		<img id="2" src="images/0.gif" />
+		<img id="3" src="images/0.gif" />
+		<img id="4" src="images/0.gif" />
+		<img id="5" src="images/0.gif" />
+      
+    </div>
+  
+<img id="deal" src="images/button.png">
+
+<div id='wager'>
+	Bet: <input id='bet' type='text' value='1' class='ui-corner-all' />
+	Coins: <input id='yourmoney' type='text' value='100' class='ui-corner-all' />
+</div>
+
+</div>
+
+<audio id="audio" autoplay loop>
+  <source src="OutThere_0.ogg" type="audio/ogg">
+Your browser does not support the audio element.
+</audio> 
+
+<!-- <script src="js/main.js"></script> -->
+<script>
+$(document).ready(function(){
+
+var arr = [];
+
+	function getrand(){
+
+		while(arr.length < 6){
+  			var rand=Math.floor((Math.random()*52)+1);
+  			var found=false;
+ 				for(var i=0;i<arr.length;i++){
+    				if(arr[i]==rand){found=true;break}
+  				}
+  			if(!found){
+  				arr[arr.length]=rand;
+  				//return Math.floor((Math.random()*52)+1); 
+			}
+
+		}		
+	} // end getrand
+
+	// one thing to do eventually is keep track of a players money via database or 
+	// on a more interesting note through browser storage in html5
+	var yourmoney;
+	var bet;
+
+$("#deal").click(function(){
+
+	yourmoney = parseInt( $("#yourmoney").val() );
+	bet = parseInt( $("#bet").val() );
+
+	//alert("money=" + yourmoney + " bet=" + bet);
+
+	if(yourmoney > 0 ) {
+
+		if( bet <= 0 || isNaN(bet) ) {
+			alert("bets gotta be a number greater than zero dumbass!");
+			exit();
+		} else if (bet > yourmoney) {
+			alert("You ain't got that much money nigga!");
+			exit();
+		} else {
+
+	yourmoney = yourmoney - bet;
+
+	//alert("your money after bet=" + yourmoney);
+
+	$("#yourmoney").val(yourmoney);
+
+	arr.length = 0;
+	getrand();
+
+	/*
+	// a royal flush
+	if () {
+		alert("a royal flush");
+	// a straight flush
+	} else if () {
+
+	// 4 of a kind
+	} else if () {
+
+	// full house 
+	} else if () {
+
+	// flush
+	} else if () {
+
+	// straight
+	} else if () {
+
+	// 3 of a kind
+	} else if () {
+
+	// 2 pair
+	} else if () {
+    
+    // a pair!
+	} else if () {
+		alert("a pair");
+	} */
+
+	//alert( arr[0] + ", " + arr[1] + ", " + arr[2] + ", " + arr[3] + ", " + arr[4] ); 
+
+	$("#1").attr("src", "images/"+arr[0]+".png");
+	$("#2").attr("src", "images/"+arr[1]+".png");
+	$("#3").attr("src", "images/"+arr[2]+".png");
+	$("#4").attr("src", "images/"+arr[3]+".png");
+	$("#5").attr("src", "images/"+arr[4]+".png"); 
+
+} // end if bet > 0
+
+} else {
+	var r=confirm("You're a broke nigga, more coins?")
+		if (r==true){
+  			$("#yourmoney").val(100);
+ 		} else  {
+  			alert("Better luck next time!")
+  		}
+	
+}
+		
+});
+
+
+});
+</script>
+</body> 
+</html>
